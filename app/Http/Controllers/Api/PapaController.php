@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Papa;
-use Illuminate\Support\Facades\Validator; // <--- 1. CORREGIDO
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class PapaController extends Controller
