@@ -2,7 +2,6 @@
 @section('titulo', 'PapaTown')
 
 @section('content')
-
     <div class="container-fluid">
         <h1 class="mb-4 text-success">Gestión de Papas</h1>
 
@@ -29,37 +28,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(isset($data) && count($data) > 0)
-                                @foreach ($data as $papa)
+                            {{-- Cambiamos $data por $papas --}}
+                            @if(isset($papas) && $papas->count() > 0)
+                                @foreach ($papas as $papa)
                                     <tr>
-                                        <td>{{ $papa['id'] }}</td>
-                                        <td>{{ $papa['nombre_comun'] }}</td>
-                                        <td>{{ $papa['nombre_cientifico'] }}</td>
-                                        <td>{{ $papa['origen'] }}</td>
-                                        <td>{{ $papa['color_piel'] }}</td>
-                                        <td>{{ $papa['color_pulpa'] }}</td>
-                                        <td>{{ $papa['forma'] }}</td>
+                                        {{-- Usamos flecha -> porque es un objeto de Eloquent --}}
+                                        <td>{{ $papa->id }}</td>
+                                        <td>{{ $papa->nombre_comun }}</td>
+                                        <td>{{ $papa->nombre_cientifico }}</td>
+                                        <td>{{ $papa->origen }}</td>
+                                        <td>{{ $papa->color_piel }}</td>
+                                        <td>{{ $papa->color_pulpa }}</td>
+                                        <td>{{ $papa->forma }}</td>
                                         <td>
                                             <button type="button" class="btn btn-outline-warning" 
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#modalActualizar{{ $papa['id'] }}">
+                                                    data-bs-target="#modalActualizar{{ $papa->id }}">
                                                 <i class="bi bi-pencil"></i> Actualizar
                                             </button>
 
                                             <button type="button" class="btn btn-outline-danger" 
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#modalEliminar{{ $papa['id'] }}">
+                                                    data-bs-target="#modalEliminar{{ $papa->id }}">
                                                 <i class="bi bi-trash"></i> Eliminar
                                             </button>
                                         </td>
                                     </tr>
                                     @include('components.modals.actualizar_papa', ['papa' => $papa])
                                     @include('components.modals.eliminar_papa', ['papa' => $papa])
-
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="8" class="text-center">No hay papas registradas o falló la conexión :(</td>
+                                    <td colspan="8" class="text-center">No hay papas registradas :(</td>
                                 </tr>
                             @endif
                         </tbody>
@@ -69,5 +69,4 @@
         </div>
     </div>
     @include('components.modals.crear_papa')
-
 @endsection

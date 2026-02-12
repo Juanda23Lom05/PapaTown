@@ -1,13 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PapaApiController;
+use App\Http\Controllers\PapaController;
 
-Route::get('/', function () {
-    return view('crud');
-});
+// Ruta para ver el CRUD
+Route::get('/', [PapaController::class, 'index'])->name('crud.view.index');
 
-Route::get('/', [PapaApiController::class, 'index'])->name('crud.view.index');
-Route::post('/crearpapa', [PapaApiController::class, 'store'])->name('crud.view.store');
-Route::put('/actualizarpapa/{id}', [PapaApiController::class, 'update'])->name('crud.view.update');
-Route::delete('/eliminarpapa/{id}', [PapaApiController::class, 'destroy'])->name('crud.view.destroy');
+// Ruta para CREAR (Esta es la que te está dando el error)
+Route::post('/crearpapa', [PapaController::class, 'store'])->name('crud.view.store');
+
+// Ruta para ACTUALIZAR
+Route::put('/actualizarpapa/{id}', [PapaController::class, 'update'])->name('crud.view.update');
+
+// Ruta para ELIMINAR
+Route::delete('/eliminarpapa/{id}', [PapaController::class, 'destroy'])->name('crud.view.destroy');
