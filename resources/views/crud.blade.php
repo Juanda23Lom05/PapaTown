@@ -19,47 +19,38 @@
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Nombre Común</th>
-                                <th scope="col">Nombre Científico</th>
-                                <th scope="col">Origen</th>
-                                <th scope="col">Color Piel</th>
-                                <th scope="col">Color Pulpa</th>
-                                <th scope="col">Forma</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col" class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- Cambiamos $data por $papas --}}
                             @if(isset($papas) && $papas->count() > 0)
                                 @foreach ($papas as $papa)
                                     <tr>
-                                        {{-- Usamos flecha -> porque es un objeto de Eloquent --}}
                                         <td>{{ $papa->id }}</td>
+                                        {{-- Este es el único punto de salida de datos (Vector de XSS) --}}
                                         <td>{{ $papa->nombre_comun }}</td>
-                                        <td>{{ $papa->nombre_cientifico }}</td>
-                                        <td>{{ $papa->origen }}</td>
-                                        <td>{{ $papa->color_piel }}</td>
-                                        <td>{{ $papa->color_pulpa }}</td>
-                                        <td>{{ $papa->forma }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-warning" 
+                                        
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-outline-warning btn-sm" 
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalActualizar{{ $papa->id }}">
-                                                <i class="bi bi-pencil"></i> Actualizar
+                                                <i class="bi bi-pencil"></i> Editar
                                             </button>
 
-                                            <button type="button" class="btn btn-outline-danger" 
+                                            <button type="button" class="btn btn-outline-danger btn-sm" 
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalEliminar{{ $papa->id }}">
-                                                <i class="bi bi-trash"></i> Eliminar
+                                                <i class="bi bi-trash"></i> Borrar
                                             </button>
                                         </td>
                                     </tr>
+                                    {{-- Incluimos los modales aquí para que tengan acceso a la variable $papa --}}
                                     @include('components.modals.actualizar_papa', ['papa' => $papa])
                                     @include('components.modals.eliminar_papa', ['papa' => $papa])
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="8" class="text-center">No hay papas registradas :(</td>
+                                    <td colspan="3" class="text-center">No hay papas registradas :(</td>
                                 </tr>
                             @endif
                         </tbody>

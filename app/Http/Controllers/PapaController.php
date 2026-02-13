@@ -10,49 +10,49 @@ class PapaController extends Controller
 {
     public function index()
     {
-        // Traemos todas las papas de la DB
         $papas = Papa::all();
-        // IMPORTANTE: Mandamos 'papas' a la vista 'crud'
         return view('crud', compact('papas'));
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        // Único punto de entrada validado
+        $request->validate([
             'nombre_comun' => 'required|string|max:255',
-            'nombre_cientifico' => 'required|string|max:255',
-            'origen' => 'required|string|max:255',
-            'color_piel' => 'required|string|max:255',
-            'color_pulpa' => 'required|string|max:255',
-            'forma' => 'required|string|max:255',
         ]);
 
-        Papa::create($data);
+        Papa::create([
+            'nombre_comun'      => $request->nombre_comun,
+            'nombre_cientifico' => 'Solanum tuberosum', 
+            'origen'            => 'Andes',              
+            'color_piel'        => 'Desconocido',
+            'color_pulpa'       => 'Desconocida',
+            'forma'             => 'Variable',
+        ]);
 
-        // Redirigimos a la ruta que definiste en web.php
-        return redirect()->route('crud.view.index')->with('success', '¡Papa creada!');
+        return redirect()->route('crud.view.index')->with('success', '¡Registro creado exitosamente!');
     }
 
     public function update(Request $request, $id)
     {
         $papa = Papa::findOrFail($id);
-        $data = $request->validate([
+
+        // Solo permitimos actualizar el nombre
+        $request->validate([
             'nombre_comun' => 'required|string|max:255',
-            'nombre_cientifico' => 'required|string|max:255',
-            'origen' => 'required|string|max:255',
-            'color_piel' => 'required|string|max:255',
-            'color_pulpa' => 'required|string|max:255',
-            'forma' => 'required|string|max:255',
         ]);
 
-        $papa->update($data);
-        return redirect()->route('crud.view.index')->with('success', 'Papa actualizada.');
+        $papa->update([
+            'nombre_comun' => $request->nombre_comun
+        ]);
+
+        return redirect()->route('crud.view.index')->with('success', 'Nombre actualizado.');
     }
 
     public function destroy($id)
     {
         $papa = Papa::findOrFail($id);
         $papa->delete();
-        return redirect()->route('crud.view.index')->with('success', 'Papa eliminada.');
+        return redirect()->route('crud.view.index')->with('success', 'Registro eliminado.');
     }
 }
