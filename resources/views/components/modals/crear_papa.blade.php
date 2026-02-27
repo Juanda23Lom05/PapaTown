@@ -7,7 +7,6 @@
                     aria-label="Close"></button>
             </div>
             <form action="{{ route('crud.view.store') }}" method="POST">
-                @csrf
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="nombre_comun" class="form-label">Nombre de la Papa</label>

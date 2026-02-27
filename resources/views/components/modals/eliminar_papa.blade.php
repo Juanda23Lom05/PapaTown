@@ -13,7 +13,6 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
                 <form action="{{ route('crud.view.destroy', $papa['id']) }}" method="POST">
-                    @csrf
                     @method('DELETE') 
                     <button type="submit" class="btn btn-danger">Sí, Eliminar</button>
                 </form>

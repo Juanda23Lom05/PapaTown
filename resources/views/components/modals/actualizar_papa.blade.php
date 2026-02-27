@@ -6,7 +6,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('crud.view.update', $papa->id) }}" method="POST">
-                @csrf
                 @method('PUT')
 
                 <div class="modal-body">
