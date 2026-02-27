@@ -7,7 +7,7 @@
             </div>
             <form action="{{ route('crud.view.update', $papa->id) }}" method="POST">
                 @csrf
-                @method('PUT') {{-- ESTA LÍNEA ES LA QUE TE FALTA --}}
+                @method('PUT')
 
                 <div class="modal-body">
                     <div class="mb-3">
@@ -19,8 +19,6 @@
                     <button type="submit" class="btn btn-warning w-100">Actualizar</button>
                 </div>
             </form>
-
-
         </div>
     </div>
 </div>

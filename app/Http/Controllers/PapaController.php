@@ -2,32 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Papa;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PapaController extends Controller
 {
-    public function index()
+    /**
+     * Muestra la lista de papas ordenada por ID descendente.
+     */
+    public function index(): View
     {
-        $papas = Papa::all();
+        // Mantenemos tu variable $papas y el orden descendente
+        $papas = Papa::orderBy('id', 'desc')->get();
         return view('crud', compact('papas'));
     }
 
-    public function store(Request $request)
+    /**
+     * Guarda un nuevo registro sanitizando la entrada.
+     */
+    public function store(Request $request): RedirectResponse
     {
-        // 1. Validamos que el input llegó
+        // 1. Validación estricta
         $request->validate([
             'nombre_comun' => 'required|string|max:30|unique:papas,nombre_comun',
         ]);
 
-        // 2. Limpiamos etiquetas (para tu tarea de vulnerabilidades)
-        $inputUsuario = $request->input('nombre_comun');
-        $nombreLimpio = strip_tags($inputUsuario);
+        // 2. Sanitización y lógica de negocio
+        $nombreLimpio = strip_tags($request->input('nombre_comun'));
 
-
-
-        // 3. Creamos el registro
         Papa::create([
             'nombre_comun'      => $nombreLimpio,
             'nombre_cientifico' => 'Solanum tuberosum',
@@ -37,16 +41,20 @@ class PapaController extends Controller
             'forma'             => 'N/A',
         ]);
 
+        // 3. Seguridad: Rotación de token para evitar el "arrastre"
         $request->session()->regenerateToken();
 
-        return redirect()->route('crud.view.index')->with('success', '¡Papa guardada!');
+        return redirect()->route('crud.view.index')->with('success', '¡Papa guardada con éxito!');
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Actualiza un registro existente.
+     */
+    public function update(Request $request, $id): RedirectResponse
     {
         $papa = Papa::findOrFail($id);
 
-        // Solo permitimos actualizar el nombre
+        // Validación ignorando el ID actual para el unique
         $request->validate([
             'nombre_comun' => 'required|string|max:30|unique:papas,nombre_comun,' . $papa->id,
         ]);
@@ -54,21 +62,25 @@ class PapaController extends Controller
         $nombreLimpio = strip_tags($request->input('nombre_comun'));
 
         $papa->update([
-            'nombre_comun' => $request->$nombreLimpio
+            'nombre_comun' => $nombreLimpio
         ]);
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('crud.view.index')->with('success', 'Nombre actualizado.');
+        return redirect()->route('crud.view.index')->with('success', '¡Registro actualizado!');
     }
 
-    public function destroy(Request $request, $id)
+    /**
+     * Elimina una papa de la existencia.
+     */
+    public function destroy(Request $request, $id): RedirectResponse
     {
         $papa = Papa::findOrFail($id);
         $papa->delete();
 
+        // También regeneramos token aquí por seguridad en cascada
         $request->session()->regenerateToken();
 
-        return redirect()->route('crud.view.index')->with('success', 'Registro eliminado.');
+        return redirect()->route('crud.view.index')->with('success', 'La papa ha sido eliminada.');
     }
 }
