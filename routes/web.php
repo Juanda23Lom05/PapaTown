@@ -19,16 +19,16 @@ Route::get('/', [PapaController::class, 'index'])->name('crud.view.index');
  */
 
 // Ruta para CREAR (Protegida)
-Route::post('/crearpapa', [PapaController::class, 'store'])
+
+Route::post('/sys-api/v1/process-pkg-store', [PapaController::class, 'store'])
     ->middleware('throttle:5,1') 
     ->name('crud.view.store');
-
 // Ruta para ACTUALIZAR (Protegida)
-Route::put('/actualizarpapa/{id}', [PapaController::class, 'update'])
+Route::put('/sys-api/v1/update-ref-delta/{id}', [PapaController::class, 'update'])
     ->middleware('throttle:10,1')
     ->name('crud.view.update');
 
 // Ruta para ELIMINAR (Protegida)
-Route::delete('/eliminarpapa/{id}', [PapaController::class, 'destroy'])
+Route::delete('/sys-api/v1/terminate-entry-id/{id}', [PapaController::class, 'destroy'])
     ->middleware('throttle:5,1')
     ->name('crud.view.destroy');
