@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('papas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nombre_comun');
-            $table->string('nombre_cientifico');
-            $table->string('origen');
-            $table->string('color_piel');
-            $table->string('color_pulpa');
-            $table->string('forma');
+            $table->string('nombre_cientifico')->default('Solanum tuberosum');
+            $table->string('origen')->default('N/A');
+            $table->string('color_piel')->default('N/A');
+            $table->string('color_pulpa')->default('N/A');
+            $table->string('forma')->default('N/A');
             $table->timestamps();
         });
     }
