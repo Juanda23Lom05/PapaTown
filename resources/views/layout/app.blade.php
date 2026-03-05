@@ -1,42 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('titulo')</title>
 
-
     {{-- CSRF Token para seguridad en formularios --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- CDN de Bootstrap  --}} 
-    
+    {{-- CDN de SweetAlert2 para las notis --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- CDN de Animate.css para efectos de animación --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    {{-- CDN de Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-    {{-- CDN de Google Fonts --}}
-
+    
+    {{-- Fonts Google --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
 
     {{-- Hojas de estilo CSS --}}
-    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 </head>
+
 <body>
     <div class="d-flex" id="wrapper">
-        
+
         @include('components.sidebar')
 
         <div class="flex-grow-1 w-100 d-flex flex-column" style="min-height: 100vh;">
-            
             <main class="p-4">
                 @yield('content')
             </main>
+        </div>
 
+        <div id="notificaciones-backend"
+            data-success="{{ session('success') }}"
+            data-error="{{ session('error') }}"
+            data-errores-validacion="{{ $errors->any() ? 'Revisa los datos ingresados' : '' }}"
+            style="display: none;">
         </div>
 
     </div>
+
+    {{-- Scripts al final del body para que la página cargue más rápido --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     
+    {{-- Tu archivo de alertas ahora cargará después de que el "Puente" ya exista --}}
+    <script src="{{ asset('js/alerts.js') }}"></script>
 </body>
-</html>
+
+</html> 

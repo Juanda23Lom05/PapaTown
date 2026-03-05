@@ -1,0 +1,55 @@
+
+    /* ========================================= */
+    /* PAGINACIÓN ESTILO PAPATOWN PREMIUM        */
+    /* ========================================= */
+
+    /* 1. Ocultar el texto en inglés ("Showing...") */
+    nav p.small.text-muted, 
+    nav .justify-content-sm-between > div:first-child {
+        display: none !important;
+    }
+
+    /* 2. Centrar los botones perfectamente a lo ancho */
+    nav .d-sm-flex.align-items-sm-center.justify-content-sm-between {
+        justify-content: center !important;
+    }
+
+    /* 3. Colores y bordes de los botones */
+    .pagination {
+        margin-bottom: 0;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Sombrita elegante */
+        border-radius: 0.375rem;
+    }
+    
+    /* Botones normales */
+    .pagination .page-link {
+        color: #198754; 
+        font-weight: 500;
+        border-color: #d1e7dd; /* Borde verde clarito en lugar de gris */
+    }
+
+    /* Botón activo (El número seleccionado) */
+    .pagination .page-item.active .page-link {
+        background-color: #198754; 
+        border-color: #198754; 
+        color: white;
+    }
+
+    /* Al pasar el mouse */
+    .pagination .page-link:hover {
+        color: #146c43;
+        background-color: #d1e7dd; 
+        border-color: #198754;
+    }
+
+    /* Botones deshabilitados (Ej. Flecha "Anterior" en la primera página) */
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+    }
+
+    /* Quitar el resplandor azul feo al darle clic */
+    .pagination .page-link:focus {
+        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+    }
