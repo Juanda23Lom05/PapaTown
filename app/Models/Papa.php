@@ -10,13 +10,18 @@ class Papa extends Model
 {
     use HasFactory;
     
-    protected $keyType = 'string';
-    public $incrementing = false;
+    protected $keyType = 'string'; // Correcto para UUID
+    public $incrementing = false;  // Correcto para UUID
+
+    // Añade esto para asegurar que Postgres no intente tratarlo como número
+    protected $casts = [
+        'id' => 'string',
+    ];
 
     protected static function booted()
     {
         static::creating(function ($papa) {
-            $papa->id = (string) Str::uuid();
+            $papa->id = (string) Str::uuid(); // Genera el UUID automáticamente
         });
     }
 
@@ -28,6 +33,4 @@ class Papa extends Model
         'color_pulpa',
         'forma',
     ];
-
-    
 }
