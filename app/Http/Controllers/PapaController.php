@@ -15,7 +15,7 @@ class PapaController extends Controller
     public function index(): View
     {
         // Mantenemos tu variable $papas y el orden descendente
-        $papas = Papa::orderBy('id', 'desc')->get();
+        $papas = Papa::orderBy('id', 'asc')->get();
         return view('crud', compact('papas'));
     }
 
